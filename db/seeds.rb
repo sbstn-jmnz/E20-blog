@@ -5,3 +5,14 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+Post.destroy_all
+User.destroy_all
+
+12.times do |i|
+  user = User.create(email: "user#{i}@yahoo.com", name: "user#{i}", password: 123456)
+  post = user.posts.build(title: "post#{i}", content: "Bla bla blá")
+  user.save
+  10.times do |j|
+    Comment.create(content: "comentario #{j} para el post#{i}", user_id: user.id, post_id: post.id )
+  end
+end
