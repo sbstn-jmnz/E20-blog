@@ -1,6 +1,5 @@
 class PagesController < ApplicationController
   load_and_authorize_resource :user, :parent => false
-  #skip_authorization_check
   # GET /pages
   # GET /pages.json
   def index
@@ -43,12 +42,12 @@ class PagesController < ApplicationController
   # PATCH/PUT /pages/1.json
   def update
     respond_to do |format|
-      if @page.update(page_params)
-        format.html { redirect_to @page, notice: 'page was successfully updated.' }
-        format.json { render :show, status: :ok, location: @page }
+      if @user.update(page_params)
+        format.html { redirect_to pages_path, notice: 'page was successfully updated.' }
+        format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
-        format.json { render json: @page.errors, status: :unprocessable_entity }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -71,7 +70,6 @@ class PagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def page_params
-      debugger
-      params.require(:pages).permit(:title, :content)
+      params.require(:user).permit(:name, :email, :role)
     end
 end
